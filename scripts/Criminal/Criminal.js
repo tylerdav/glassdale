@@ -1,6 +1,6 @@
 console.log("****  Criminal module code  ****")
 const Criminal = (criminal) => {
-    console.log("**** I am the item component  ****")
+    console.log("**** this am the item component  ****")
     return `
         <section class="criminal">
             <header class="criminal__header">
@@ -16,6 +16,8 @@ const Criminal = (criminal) => {
             <div>
                 Term end: ${new Date(criminal.incarceration.end).toLocaleDateString('en-US')}
             </div>
+            <button id="associates--${criminal.id}">Associate Alibis</button>
+            <button id="Witnesses--${criminal.id}">Witnesses</button>
         </section>
     `
 }

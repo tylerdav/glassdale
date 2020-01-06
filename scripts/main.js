@@ -1,17 +1,33 @@
 
 import { getCriminals } from "./Criminal/CriminalProvider.js"
-import CriminalList from "./Criminal/CriminalList.js"
 import { getConvictions } from "./convictions/ConvictionProvider.js"
-import ConvictionSelect from "./convictions/ConvictionSelect.js"
 import { getOfficers } from "./officers/OfficerProvider.js"
-import OfficerList from "./officers/OfficerList.js"
+import { getNotes } from "./notes/NoteProvider.js"
+import CriminalList from "./Criminal/CriminalList.js"
+import ConvictionSelect from "./convictions/ConvictionSelect.js"
+import OfficerSelect from "./officers/OfficerSelect.js"
+import NoteFormComponent from "./notes/NoteForm.js"
+import NoteListComponent from "./notes/NotesList.js"
+import DialogComponent from "./dialog/Dialog.js"
+import witnessComponent from "./Witness/WitnessSelect.js"
 
-getCriminals().then(
-    () => CriminalList())
+const loadData = () => {
+    return getConvictions()
+        .then(getNotes)
+        .then(getCriminals)
+        .then(getOfficers)
+}
 
-getConvictions().then(
-    () => ConvictionSelect())
+const renderInitialComponents = () => {
+    ConvictionSelect()
+    OfficerSelect()
+    NoteFormComponent()
+    NoteListComponent()
+    CriminalList()
+    DialogComponent()
+    witnessComponent()
+}
 
-getOfficers().then(
-    () => OfficerList()
-)
+
+loadData().then(renderInitialComponents)
+

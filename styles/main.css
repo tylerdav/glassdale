@@ -1,11 +1,13 @@
 @import './criminal.css';
 @import './officer.css';
-@import './nav.css';
+@import './notes.css';
+
+
 
 
 
 body {
-    background-color: grey;
+    background-color: rgb(88, 88, 88);
 }
 
 h1 {
