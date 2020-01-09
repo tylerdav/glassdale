@@ -1,12 +1,6 @@
-.criminalList {
-    display: flex;
-    flex-wrap: wrap;
-    flex-basis: 100%;
-    justify-content: space-evenly;
-}
 
 .criminal {
-    flex-basis: 20%;
+    flex-basis: 28%;
     width: 20%;
     border: 3px solid darkgreen;
     padding: 0 8px;

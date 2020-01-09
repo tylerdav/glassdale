@@ -9,7 +9,8 @@ import OfficerSelect from "./officers/OfficerSelect.js"
 import NoteFormComponent from "./notes/NoteForm.js"
 import NoteListComponent from "./notes/NotesList.js"
 import DialogComponent from "./dialog/Dialog.js"
-import witnessComponent from "./Witness/WitnessSelect.js"
+
+import FilterButton from "./filter/Filter.js"
 
 const loadData = () => {
     return getConvictions()
@@ -21,11 +22,12 @@ const loadData = () => {
 const renderInitialComponents = () => {
     ConvictionSelect()
     OfficerSelect()
+    FilterButton()
     NoteFormComponent()
     NoteListComponent()
     CriminalList()
     DialogComponent()
-    witnessComponent()
+
 }
 
 

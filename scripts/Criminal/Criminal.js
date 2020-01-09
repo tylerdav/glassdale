@@ -17,7 +17,6 @@ const Criminal = (criminal) => {
                 Term end: ${new Date(criminal.incarceration.end).toLocaleDateString('en-US')}
             </div>
             <button id="associates--${criminal.id}">Associate Alibis</button>
-            <button id="Witnesses--${criminal.id}">Witnesses</button>
         </section>
     `
 }

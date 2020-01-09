@@ -1,39 +1,46 @@
-import { useConvictions } from "./ConvictionProvider.js";
+import { useConvictions, getConvictions } from "./ConvictionProvider.js"
 
-const eventHub = document.querySelector("#container")
+const eventHub = document.querySelector(".container")
 const contentTarget = document.querySelector(".filters__crime")
 
+
 const ConvictionSelect = () => {
+    const convictions = useConvictions()
 
-  const convictions = useConvictions()
+    // What should this component say to the event hub, and when
+    eventHub.addEventListener("change", changeEvent => {
+        if (changeEvent.target.id === "crimeSelect") {
+            // Make a custom event to "talk" to other components
+            const selectedCrime = changeEvent.target.value
 
+            const message = new CustomEvent("crimeSelected", {
+                detail: {
+                    crime: selectedCrime
+                }
+            })
 
-  const render = convictionsCollection => {
-    contentTarget.innerHTML += `
-    <select class="dropdown" id="crimeSelect">
-    <option value="0">Please select a crime...</option>
-    ${convictionsCollection.map(crime => `<option id=selected${crime}>${crime}</option>`)}
-    </select>`
-  }
-  render(convictions)
-
-  // ​what should this component say to the hub, and when
-  eventHub.addEventListener("change", changeEvent => {
-    if (changeEvent.target.classList.contains("dropdown")) {
-
-      // make a custom event to "talk" to other components
-
-      const selectConvictions = changeEvent.target.value
-
-
-      const crime = new CustomEvent("crimeSelected", {
-        detail: {
-          crime: selectConvictions
+            // Dispatch it
+            eventHub.dispatchEvent(message)
         }
-      });
-      eventHub.dispatchEvent(crime);
+    })
+
+
+
+
+    const render = convictionsCollection => {
+        contentTarget.innerHTML += `
+            <select class="dropdown" id="crimeSelect">
+                <option value="0">Please select a crime...</option>
+                ${
+                    convictionsCollection.map(currentCrime => {
+                        return `<option value="${currentCrime}">${currentCrime}</option>`
+                    })
+                }
+            </select>
+        `
     }
-  });
+
+    render(convictions)
 }
 
 export default ConvictionSelect

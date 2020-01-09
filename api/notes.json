@@ -7,16 +7,10 @@
       "id": 1
     },
     {
-      "text": "a",
-      "suspect": "a",
-      "date": 1576259901678,
+      "text": "he didn't do it",
+      "suspect": "bob",
+      "date": 1578337848948,
       "id": 2
-    },
-    {
-      "text": "a",
-      "suspect": "a",
-      "date": 1576259902324,
-      "id": 3
     }
   ]
 }

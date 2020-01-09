@@ -6,28 +6,34 @@ const setNotes = (noteArray) => {
 
 export const useNotes = () => notes.slice()
 
-export const deleteNote = (noteId) => {
-    return fetch("http://localhost:8088/notes/${noteId}", {
-
-    method: "delete"
-
+export const editNote = (noteObject) => {
+    return fetch(`http://localhost:8088/notes/${noteObject.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(noteObject)
     })
-    .then(getNotes)
-        
+        .then(getNotes)
+
 }
 
-
-
+export const deleteNote = (noteId) => {
+    return fetch(`http://localhost:8088/notes/${noteId}`, {
+        method: "DELETE"
+    })
+    .then(getNotes)
+}
 
 export const saveNote = note => {
-    fetch('http://localhost:8088/notes', {
+    return fetch('http://localhost:8088/notes', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(note)
     })
-        .then(getNotes)
+    .then(getNotes)
 }
 
 export const getNotes = () => {

@@ -1,48 +1,37 @@
-import { useCriminals, getCriminalsByOfficer } from "./CriminalProvider.js";
-import Criminal from "./Criminal.js";
+import { useCriminals, getCriminalsByOfficer } from "./CriminalProvider.js"
+import { getCriminalsByCrime } from "./CriminalProvider.js"
+import Criminal from "./Criminal.js"
 
 const eventHub = document.querySelector(".container")
 const contentTarget = document.querySelector(".criminalsContainer")
 
-console.log("**this is the criminal list component**")
-
 const CriminalList = () => {
-
+    // Load the application state to be used by this component
     const appStateCriminals = useCriminals()
 
-
-    eventHub.addEventListener("crimeSelected", event => {
-        if ("crime" in event.detail) {
-
-            const matchingCriminals = appStateCriminals.filter(criminal => criminal.conviction === event.detail.crime)
-
-            render(matchingCriminals)
-        }
+    eventHub.addEventListener("showNoteButtonClicked", event => {
+        render([])
     })
 
+    // What should happen when detective selects a crime?
+    eventHub.addEventListener("filterClicked", event => {
+        const crimeName = event.detail.crime
+        const officerName = event.detail.officer
 
-    const criminalsContainer = document.querySelector(".criminalsContainer")
-    const render = criminalCollection => {
-        criminalsContainer.innerHTML = `
-    <section class="criminalList">
-
-    ${criminalCollection.map(currentCriminal => {
-            return Criminal(currentCriminal);
-        }).join("")}
-        </section>
-        `
-    }
-
-
-    eventHub.addEventListener('officerSelected', event => {
-        if ("officerName" in event.detail) {
-            if (event.detail.officerName === "0") {
-                render(appStateCriminals)
-            } else {
-                const filteredCriminals = getCriminalsByOfficer(event.detail.officerName)
-                render(filteredCriminals)
+        const filteredCriminals = appStateCriminals.filter(
+            (individualCriminal) => {
+                if (individualCriminal.conviction === crimeName) {
+                    return individualCriminal
+                }
             }
-        }
+        )
+        .filter(criminal => {
+            if (criminal.arrestingOfficer === officerName) {
+                return criminal
+            }
+        })
+
+        render(filteredCriminals)
     })
 
 
@@ -60,9 +49,23 @@ const CriminalList = () => {
         }
     })
 
+    // Function that handles rendering of the HTML representation of the application state
+    const render = criminals => {
+        contentTarget.innerHTML = `
+            <article class="criminalComponent">
+                <div class="criminals">
+                    ${
+                        criminals.map(currentCriminalObject => {
+                            const criminalHTML = Criminal(currentCriminalObject)
+                            return criminalHTML
+                        }).join("")
+                    }
+                </div>
+            </article>
+        `
+    }
+
     render(appStateCriminals)
 }
-
-
 
 export default CriminalList
